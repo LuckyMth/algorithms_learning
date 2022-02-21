@@ -43,13 +43,13 @@ def get_ram_array(_num, _max):
 def div_merge_array(ram2, n2, m2):
     if n2 == m2:
         ma0 = [ram2[n2], n2, m2]
-    elif m2-n2 == 1:
-        if ram2[n2] > ram2[m2]:
-            ma0 = [ram2[n2], n2, n2]
-        else:
-            ma0 = [ram2[m2], m2, m2]
-        if ram2[n2] > 0 and ram2[m2] > 0:
-            ma0 = [ram2[n2]+ram2[m2], n2, m2]
+    # elif m2-n2 == 1:
+    #     if ram2[n2] > ram2[m2]:
+    #         ma0 = [ram2[n2], n2, n2]
+    #     else:
+    #         ma0 = [ram2[m2], m2, m2]
+    #     if ram2[n2] > 0 and ram2[m2] > 0:
+    #         ma0 = [ram2[n2]+ram2[m2], n2, m2]
     else:
         ma1 = div_merge_array(ram2, n2, int((n2+m2)/2))
         ma2 = div_merge_array(ram2, int((n2+m2)/2)+1, m2)
