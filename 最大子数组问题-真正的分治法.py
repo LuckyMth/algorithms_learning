@@ -3,27 +3,28 @@ import random
 import copy
 
 
-def max_array_mid(__ram, _n, _m):
-    _mid = int((_n+_m)/2)
+# 求跨过中点的最大子数组
+def max_arraymid3(ram3, n3, m3):
+    mid3 = int((n3+m3)/2)
     # 向左方向的最大子数组
-    _ml = [__ram[_mid], _mid, _mid]
+    ml3 = [ram3[mid3], mid3, mid3]
     # 向右方向的最大子数组
-    _mr = [__ram[_mid+1], _mid+1, _mid+1]
-    # 跨过中点肯定包含_ram[_mid]和_ram[_mid+1]
-    __tem = _ml[0]
-    for _i in range(_n, _mid):
-        _nb = _mid-1+_n-_i
-        __tem = __tem + __ram[_nb]
-        if _ml[0] < __tem:
-            _ml[0] = __tem
-            _ml[1] = _nb
-    __tem = _mr[0]
-    for _i in range(_mid+1, _m):
-        __tem = __tem + __ram[_i+1]
-        if _mr[0] < __tem:
-            _mr[0] = __tem
-            _mr[2] = _i+1
-    return [_ml[0]+_mr[0], _ml[1], _mr[2]]
+    mr3 = [ram3[mid3+1], mid3+1, mid3+1]
+    # 跨过中点肯定包含ram3[mid3]和ram3[mid3+1]
+    tem3 = ml3[0]
+    for i3 in range(n3, mid3):
+        nb3 = mid3-1+n3-i3
+        tem3 = tem3 + ram3[nb3]
+        if ml3[0] < tem3:
+            ml3[0] = tem3
+            ml3[1] = nb3
+    tem3 = mr3[0]
+    for i3 in range(mid3+1, m3):
+        tem3 = tem3 + ram3[i3+1]
+        if mr3[0] < tem3:
+            mr3[0] = tem3
+            mr3[2] = i3+1
+    return [ml3[0]+mr3[0], ml3[1], mr3[2]]
 
 
 # 获取随机数组
@@ -39,30 +40,32 @@ def get_ram_array(_num, _max):
 
 # 求最大子数组
 # 跨过中点的最大子数组不一定就是左端最大子数组+右端最大子数组！
-def div_merge_array(_ram, n, m):
-    if n == m:
-        m1 = [_ram[n], n, m]
-    elif m-n == 1:
-        if _ram[n] > _ram[m]:
-            m1 = [_ram[n], n, n]
+def div_merge_array(ram2, n2, m2):
+    if n2 == m2:
+        ma0 = [ram2[n2], n2, m2]
+    elif m2-n2 == 1:
+        if ram2[n2] > ram2[m2]:
+            ma0 = [ram2[n2], n2, n2]
         else:
-            m1 = [_ram[m], m, m]
-        if _ram[n] > 0 and _ram[m] > 0:
-            m1 = [_ram[n]+_ram[m], n, m]
+            ma0 = [ram2[m2], m2, m2]
+        if ram2[n2] > 0 and ram2[m2] > 0:
+            ma0 = [ram2[n2]+ram2[m2], n2, m2]
     else:
-        m1 = div_merge_array(_ram, n, int((n+m)/2))
-        m2 = div_merge_array(_ram, int((n+m)/2)+1, m)
-        m3 = max_array_mid(_ram, n, m)
-        if m2[0] > m1[0]:
-            m1 = m2
-        if m3[0] > m1[0]:
-            m1 = m3
-    return m1
+        ma1 = div_merge_array(ram2, n2, int((n2+m2)/2))
+        ma2 = div_merge_array(ram2, int((n2+m2)/2)+1, m2)
+        ma3 = max_arraymid3(ram2, n2, m2)
+        if ma2[0] > ma1[0]:
+            ma0 = ma2
+        else:
+            ma0 = ma1
+        if ma3[0] > ma0[0]:
+            ma0 = ma3
+    return ma0
 
 
 # 最大子数组问题：给定数组，在前端选择较小值，在后端选择较大值，作差。输出最大差值及选择的方法
 if __name__ == "__main__":
-    for ik in range(200000):
+    for ik in range(20000):
         ram = get_ram_array(5, 100)
         # print(ram)
         ram1 = copy.deepcopy(ram)
