@@ -29,18 +29,12 @@ if __name__ == "__main__":
     for m in range(1, len(arr)):
         i = 0
         j = m-1
-        mid = int((i+j)/2)
         while i <= j:
-            if arr[mid] == arr[m]:
-                # 变量 i 复用，便于后续统一处理
-                i = mid+1
-                break
-            elif arr[mid] < arr[m]:
-                i = mid+1
-                mid = int((i+j)/2)
-            elif arr[mid] > arr[m]:
+            mid = int((i+j)/2)
+            if arr[mid] > arr[m]:
                 j = mid-1
-                mid = int((i+j)/2)
+            else:
+                i = mid+1
         tem = arr[m]
         arr[i+1:m+1] = arr[i:m]
         arr[i] = tem
